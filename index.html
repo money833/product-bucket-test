@@ -386,6 +386,29 @@
       </button>
       <p class="fine-print">각 게임은 1~45에서 숫자 6개를 무작위로 뽑습니다.</p>
     </div>
+
+    <section class="ticket" style="margin-top: 48px;" aria-label="제휴 문의">
+      <div class="ticket-head">
+        <div class="ticket-title"><strong>제휴 문의</strong><span>Partnership Inquiry</span></div>
+      </div>
+      <div style="padding: 24px;">
+        <form action="https://formspree.io/f/xeaevrkr" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label for="name" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">회사명 / 담당자명</label>
+            <input type="text" id="name" name="name" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="회사명 또는 성함을 입력해주세요">
+          </div>
+          <div>
+            <label for="email" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">이메일 주소</label>
+            <input type="email" id="email" name="email" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="reply@example.com">
+          </div>
+          <div>
+            <label for="message" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">문의 내용</label>
+            <textarea id="message" name="message" rows="4" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px; resize: vertical;" placeholder="제휴 및 협력 문의 내용을 자유롭게 작성해주세요"></textarea>
+          </div>
+          <button type="submit" class="draw-button" style="width: 100%; min-height: 46px; font-size: 14px; box-shadow: 0 4px 0 var(--green-dark), 0 6px 12px #174c3826;">문의 전송하기</button>
+        </form>
+      </div>
+    </section>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
