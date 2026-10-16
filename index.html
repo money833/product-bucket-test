@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ec">
+  <title>행운상점 | 로또 번호 추첨</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f3ec;
+      --ink: #17251e;
+      --muted: #68746c;
+      --green: #174c38;
+      --green-dark: #103728;
+      --line: #dedfd5;
+      --yellow: #f4c849;
+      --blue: #5995d1;
+      --red: #ed785d;
+      --gray: #aab0b4;
+      --lime: #80b66a;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#24463213 0.7px, transparent 0.7px);
+      background-size: 7px 7px;
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .page {
+      width: min(100% - 40px, 980px);
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 21px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--green);
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--paper);
+      background: var(--green);
+      font-family: sans-serif;
+      font-size: 15px;
+    }
+
+    .top-note {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 45px 0 26px;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: #9a6138;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(38px, 7vw, 60px);
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1.04;
+    }
+
+    .intro-copy {
+      max-width: 290px;
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .ticket {
+      overflow: hidden;
+      border: 1px solid #d8d9ce;
+      border-radius: 8px;
+      background: #fffefa;
+      box-shadow: 0 16px 40px #2538290c, 0 2px 6px #25382908;
+    }
+
+    .ticket-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 66px;
+      padding: 0 23px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ticket-title {
+      display: flex;
+      align-items: baseline;
+      gap: 11px;
+    }
+
+    .ticket-title strong { font-size: 15px; }
+    .ticket-title span { color: var(--muted); font-size: 12px; }
+
+    .copy-button {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      gap: 7px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .copy-button:hover { border-color: #aab4a8; background: #f5f5ef; }
+    .copy-button svg { width: 14px; height: 14px; }
+
+    .results { padding: 4px 23px; }
+
+    .result-row {
+      display: grid;
+      min-height: 59px;
+      grid-template-columns: 46px 1fr 25px;
+      align-items: center;
+      border-bottom: 1px dashed #e7e7df;
+      animation: rise-in 360ms both;
+      animation-delay: calc(var(--row) * 24ms);
+    }
+
+    .result-row:last-child { border-bottom: 0; }
+
+    .row-index {
+      color: #889188;
+      font-family: var(--serif);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .balls {
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 2vw, 12px);
+    }
+
+    .ball {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      place-items: center;
+      border: 1px solid #15241c12;
+      border-radius: 50%;
+      color: #1c2720;
+      box-shadow: inset 0 2px 3px #ffffff75, 0 2px 3px #17251e13;
+      font-size: 13px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+      animation: pop-in 320ms both;
+      animation-delay: calc(var(--row) * 24ms + var(--ball) * 35ms);
+    }
+
+    .ball-1 { background: var(--yellow); }
+    .ball-2 { background: var(--blue); color: white; }
+    .ball-3 { background: var(--red); color: white; }
+    .ball-4 { background: var(--gray); color: white; }
+    .ball-5 { background: var(--lime); color: white; }
+
+    .row-check {
+      color: #a8b0a7;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .ticket-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+      padding: 0 23px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .foot-mark { color: #9a6138; font-weight: 700; }
+
+    .action-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding-top: 24px;
+    }
+
+    .draw-button {
+      display: inline-flex;
+      min-width: 220px;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: 5px;
+      color: white;
+      background: var(--green);
+      box-shadow: 0 4px 0 var(--green-dark), 0 8px 18px #174c3826;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+    }
+
+    .draw-button:hover { background: #205e45; transform: translateY(-1px); }
+    .draw-button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--green-dark); }
+    .draw-button:focus-visible, .copy-button:focus-visible { outline: 3px solid #d09a4e; outline-offset: 3px; }
+    .draw-button svg { width: 18px; height: 18px; }
+
+    .fine-print { margin: 0; color: #7b837b; font-size: 11px; }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 12px 16px;
+      border-radius: 5px;
+      color: white;
+      background: var(--green-dark);
+      box-shadow: 0 8px 24px #10291c33;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(.82); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 580px) {
+      .page { width: min(100% - 28px, 480px); padding-top: 18px; }
+      .intro { display: block; padding: 34px 0 21px; }
+      .intro-copy { margin-top: 12px; font-size: 13px; }
+      .top-note { font-size: 10px; }
+      .ticket-head { min-height: 59px; padding: 0 14px; }
+      .ticket-title { gap: 7px; }
+      .ticket-title strong { font-size: 13px; }
+      .ticket-title span { font-size: 10px; }
+      .copy-button { min-height: 33px; padding: 0 8px; font-size: 11px; }
+      .results { padding: 3px 12px; }
+      .result-row { min-height: 53px; grid-template-columns: 32px 1fr 17px; }
+      .balls { gap: clamp(4px, 1.7vw, 8px); }
+      .ball { width: clamp(29px, 8vw, 34px); height: clamp(29px, 8vw, 34px); flex-basis: clamp(29px, 8vw, 34px); font-size: 11px; }
+      .ticket-foot { min-height: 46px; padding: 0 14px; font-size: 10px; }
+      .action-area { padding-top: 21px; }
+      .draw-button { min-width: 100%; min-height: 52px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">행</span> 행운상점</div>
+      <span class="top-note">오늘의 작은 기대, 열 장</span>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">LUCKY NUMBERS, FRESHLY PICKED</p>
+        <h1 id="page-title">행운을 뽑아보세요</h1>
+      </div>
+      <p class="intro-copy">1부터 45까지, 겹치지 않는 숫자 6개.<br>새로운 조합 열 개를 준비했어요.</p>
+    </section>
+
+    <section class="ticket" aria-label="로또 번호 추첨 결과">
+      <div class="ticket-head">
+        <div class="ticket-title"><strong>행운 번호</strong><span>총 10게임</span></div>
+        <button class="copy-button" id="copy-button" type="button" aria-label="번호 열 게임 복사">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+          번호 복사
+        </button>
+      </div>
+      <div class="results" id="results" aria-live="polite" aria-atomic="false"></div>
+      <div class="ticket-foot"><span id="draw-time">방금 추첨했어요</span><span class="foot-mark">행운은 가까이에</span></div>
+    </section>
+
+    <div class="action-area">
+      <button class="draw-button" id="draw-button" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"></path><circle cx="12" cy="12" r="4"></circle></svg>
+        번호 10게임 다시 뽑기
+      </button>
+      <p class="fine-print">각 게임은 1~45에서 숫자 6개를 무작위로 뽑습니다.</p>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const resultElement = document.querySelector("#results");
+    const drawTimeElement = document.querySelector("#draw-time");
+    const toastElement = document.querySelector("#toast");
+    let currentGames = [];
+    let toastTimer;
+
+    function randomNumber(max) {
+      if (window.crypto && window.crypto.getRandomValues) {
+        const range = 0x100000000;
+        const limit = range - (range % max);
+        const values = new Uint32Array(1);
+        do {
+          window.crypto.getRandomValues(values);
+        } while (values[0] >= limit);
+        return (values[0] % max) + 1;
+      }
+      return Math.floor(Math.random() * max) + 1;
+    }
+
+    function drawGames() {
+      return Array.from({ length: 10 }, () => {
+        const numbers = new Set();
+        while (numbers.size < 6) numbers.add(randomNumber(45));
+        return [...numbers].sort((first, second) => first - second);
+      });
+    }
+
+    function renderGames() {
+      resultElement.replaceChildren();
+      currentGames.forEach((numbers, gameIndex) => {
+        const row = document.createElement("div");
+        row.className = "result-row";
+        row.style.setProperty("--row", gameIndex);
+        row.setAttribute("aria-label", `${gameIndex + 1}게임`);
+
+        const index = document.createElement("span");
+        index.className = "row-index";
+        index.textContent = String(gameIndex + 1).padStart(2, "0");
+
+        const balls = document.createElement("div");
+        balls.className = "balls";
+        balls.setAttribute("aria-label", numbers.join(", "));
+        numbers.forEach((number, ballIndex) => {
+          const ball = document.createElement("span");
+          const colorClass = Math.ceil(number / 10);
+          ball.className = `ball ball-${colorClass}`;
+          ball.style.setProperty("--ball", ballIndex);
+          ball.textContent = String(number).padStart(2, "0");
+          balls.append(ball);
+        });
+
+        const check = document.createElement("span");
+        check.className = "row-check";
+        check.textContent = "✓";
+        check.setAttribute("aria-hidden", "true");
+        row.append(index, balls, check);
+        resultElement.append(row);
+      });
+      drawTimeElement.textContent = `추첨 시각 ${new Intl.DateTimeFormat("ko-KR", { hour: "2-digit", minute: "2-digit" }).format(new Date())}`;
+    }
+
+    function showToast(message) {
+      window.clearTimeout(toastTimer);
+      toastElement.textContent = message;
+      toastElement.classList.add("visible");
+      toastTimer = window.setTimeout(() => toastElement.classList.remove("visible"), 2200);
+    }
+
+    document.querySelector("#draw-button").addEventListener("click", () => {
+      currentGames = drawGames();
+      renderGames();
+    });
+
+    document.querySelector("#copy-button").addEventListener("click", async () => {
+      const text = currentGames.map((numbers, index) => `${String(index + 1).padStart(2, "0")}게임  ${numbers.map(number => String(number).padStart(2, "0")).join(", ")}`).join("\n");
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const temporaryInput = document.createElement("textarea");
+        temporaryInput.value = text;
+        temporaryInput.style.position = "fixed";
+        temporaryInput.style.opacity = "0";
+        document.body.append(temporaryInput);
+        temporaryInput.select();
+        document.execCommand("copy");
+        temporaryInput.remove();
+      }
+      showToast("번호 10게임을 복사했어요.");
+    });
+
+    currentGames = drawGames();
+    renderGames();
+  </script>
+</body>
+</html>
