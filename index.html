@@ -14,12 +14,50 @@
       --green: #174c38;
       --green-dark: #103728;
       --line: #dedfd5;
+      --ticket-bg: #fffefa;
+      --ticket-border: #d8d9ce;
+      --row-border: #e7e7df;
       --yellow: #f4c849;
       --blue: #5995d1;
       --red: #ed785d;
       --gray: #aab0b4;
       --lime: #80b66a;
       --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --paper: #121815;
+      --ink: #e6e8e5;
+      --muted: #9aa49e;
+      --green: #2ecc71;
+      --green-dark: #1e8449;
+      --line: #26332c;
+      --ticket-bg: #1a231e;
+      --ticket-border: #2e3d34;
+      --row-border: #222e28;
+      --yellow: #f4c849;
+      --blue: #5995d1;
+      --red: #ed785d;
+      --gray: #aab0b4;
+      --lime: #80b66a;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+    .theme-toggle:hover {
+      background: var(--line);
     }
 
     * { box-sizing: border-box; }
@@ -115,9 +153,9 @@
 
     .ticket {
       overflow: hidden;
-      border: 1px solid #d8d9ce;
+      border: 1px solid var(--ticket-border);
       border-radius: 8px;
-      background: #fffefa;
+      background: var(--ticket-bg);
       box-shadow: 0 16px 40px #2538290c, 0 2px 6px #25382908;
     }
 
@@ -164,7 +202,7 @@
       min-height: 59px;
       grid-template-columns: 46px 1fr 25px;
       align-items: center;
-      border-bottom: 1px dashed #e7e7df;
+      border-bottom: 1px dashed var(--row-border);
       animation: rise-in 360ms both;
       animation-delay: calc(var(--row) * 24ms);
     }
@@ -315,7 +353,10 @@
   <main class="page">
     <header class="topbar">
       <div class="brand"><span class="brand-mark" aria-hidden="true">행</span> 행운상점</div>
-      <span class="top-note">오늘의 작은 기대, 열 장</span>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="top-note">오늘의 작은 기대, 열 장</span>
+        <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">🌙 다크 모드</button>
+      </div>
     </header>
 
     <section class="intro" aria-labelledby="page-title">
@@ -437,6 +478,25 @@
         temporaryInput.remove();
       }
       showToast("번호 10게임을 복사했어요.");
+    });
+
+    const themeToggleButton = document.querySelector("#theme-toggle");
+    const savedTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+    if (savedTheme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      themeToggleButton.textContent = "☀️ 라이트 모드";
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+      themeToggleButton.textContent = "🌙 다크 모드";
+    }
+
+    themeToggleButton.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      themeToggleButton.textContent = newTheme === "dark" ? "☀️ 라이트 모드" : "🌙 다크 모드";
     });
 
     currentGames = drawGames();
