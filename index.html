@@ -4,60 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3ec">
-  <title>행운상점 | 로또 번호 추첨</title>
+  <title>멍냥 동물상 테스트 | Pawfect Animal Face Test</title>
   <style>
     :root {
       color-scheme: light;
-      --paper: #f5f3ec;
-      --ink: #17251e;
-      --muted: #68746c;
-      --green: #174c38;
-      --green-dark: #103728;
-      --line: #dedfd5;
-      --ticket-bg: #fffefa;
-      --ticket-border: #d8d9ce;
-      --row-border: #e7e7df;
+      --paper: #fdfbf7;
+      --ink: #2b2b28;
+      --muted: #737871;
+      --primary: #ff7a59;
+      --primary-dark: #e05e3b;
+      --primary-light: #fff0ec;
+      --line: #e6e4dc;
+      --card-bg: #ffffff;
+      --card-border: #e8e6dc;
+      --row-border: #f0eee6;
       --yellow: #f4c849;
       --blue: #5995d1;
-      --red: #ed785d;
-      --gray: #aab0b4;
-      --lime: #80b66a;
+      --pink: #ff85a1;
+      --purple: #9b72cf;
       --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
     }
 
     [data-theme="dark"] {
       color-scheme: dark;
-      --paper: #121815;
-      --ink: #e6e8e5;
+      --paper: #141715;
+      --ink: #f0f2ef;
       --muted: #9aa49e;
-      --green: #2ecc71;
-      --green-dark: #1e8449;
+      --primary: #ff8a6c;
+      --primary-dark: #e06c4e;
+      --primary-light: #2b1f1c;
       --line: #26332c;
-      --ticket-bg: #1a231e;
-      --ticket-border: #2e3d34;
-      --row-border: #222e28;
-      --yellow: #f4c849;
-      --blue: #5995d1;
-      --red: #ed785d;
-      --gray: #aab0b4;
-      --lime: #80b66a;
-    }
-
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-      font-size: 12px;
-      transition: background 160ms ease, border-color 160ms ease;
-    }
-    .theme-toggle:hover {
-      background: var(--line);
+      --card-bg: #1c221e;
+      --card-border: #2c3831;
+      --row-border: #232f28;
     }
 
     * { box-sizing: border-box; }
@@ -68,24 +47,24 @@
       margin: 0;
       color: var(--ink);
       background-color: var(--paper);
-      background-image: radial-gradient(#24463213 0.7px, transparent 0.7px);
-      background-size: 7px 7px;
+      background-image: radial-gradient(#ff7a5915 0.8px, transparent 0.8px);
+      background-size: 8px 8px;
       font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
     }
 
-    button { font: inherit; }
+    button { font: inherit; cursor: pointer; }
 
     .page {
-      width: min(100% - 40px, 980px);
+      width: min(100% - 40px, 920px);
       margin: 0 auto;
-      padding: 28px 0 44px;
+      padding: 32px 0 60px;
     }
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 21px;
+      padding-bottom: 24px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -93,452 +72,599 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      color: var(--green);
+      color: var(--primary);
       font-family: var(--serif);
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: 0;
     }
 
     .brand-mark {
       display: grid;
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
       place-items: center;
       border-radius: 50%;
-      color: var(--paper);
-      background: var(--green);
-      font-family: sans-serif;
-      font-size: 15px;
+      color: white;
+      background: var(--primary);
+      font-size: 18px;
     }
 
-    .top-note {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0;
-    }
-
-    .intro {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 45px 0 26px;
-    }
-
-    .eyebrow {
-      margin: 0 0 9px;
-      color: #9a6138;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: var(--serif);
-      font-size: clamp(38px, 7vw, 60px);
-      font-weight: 600;
-      letter-spacing: 0;
-      line-height: 1.04;
-    }
-
-    .intro-copy {
-      max-width: 290px;
-      margin: 0 0 4px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .ticket {
-      overflow: hidden;
-      border: 1px solid var(--ticket-border);
-      border-radius: 8px;
-      background: var(--ticket-bg);
-      box-shadow: 0 16px 40px #2538290c, 0 2px 6px #25382908;
-    }
-
-    .ticket-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 66px;
-      padding: 0 23px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .ticket-title {
-      display: flex;
-      align-items: baseline;
-      gap: 11px;
-    }
-
-    .ticket-title strong { font-size: 15px; }
-    .ticket-title span { color: var(--muted); font-size: 12px; }
-
-    .copy-button {
+    .theme-toggle {
       display: inline-flex;
-      min-height: 36px;
       align-items: center;
-      gap: 7px;
-      padding: 0 11px;
+      gap: 6px;
+      padding: 7px 14px;
       border: 1px solid var(--line);
-      border-radius: 5px;
-      color: var(--ink);
+      border-radius: 20px;
       background: transparent;
-      cursor: pointer;
+      color: var(--ink);
       font-size: 12px;
       transition: background 160ms ease, border-color 160ms ease;
     }
+    .theme-toggle:hover { background: var(--line); }
 
-    .copy-button:hover { border-color: #aab4a8; background: #f5f5ef; }
-    .copy-button svg { width: 14px; height: 14px; }
-
-    .results { padding: 4px 23px; }
-
-    .result-row {
-      display: grid;
-      min-height: 59px;
-      grid-template-columns: 46px 1fr 25px;
-      align-items: center;
-      border-bottom: 1px dashed var(--row-border);
-      animation: rise-in 360ms both;
-      animation-delay: calc(var(--row) * 24ms);
+    .intro {
+      text-align: center;
+      padding: 48px 0 32px;
     }
 
-    .result-row:last-child { border-bottom: 0; }
-
-    .row-index {
-      color: #889188;
-      font-family: var(--serif);
-      font-size: 14px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .balls {
-      display: flex;
-      align-items: center;
-      gap: clamp(6px, 2vw, 12px);
-    }
-
-    .ball {
-      display: grid;
-      width: 36px;
-      height: 36px;
-      flex: 0 0 36px;
-      place-items: center;
-      border: 1px solid #15241c12;
-      border-radius: 50%;
-      color: #1c2720;
-      box-shadow: inset 0 2px 3px #ffffff75, 0 2px 3px #17251e13;
-      font-size: 13px;
-      font-weight: 750;
-      font-variant-numeric: tabular-nums;
-      animation: pop-in 320ms both;
-      animation-delay: calc(var(--row) * 24ms + var(--ball) * 35ms);
-    }
-
-    .ball-1 { background: var(--yellow); }
-    .ball-2 { background: var(--blue); color: white; }
-    .ball-3 { background: var(--red); color: white; }
-    .ball-4 { background: var(--gray); color: white; }
-    .ball-5 { background: var(--lime); color: white; }
-
-    .row-check {
-      color: #a8b0a7;
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary);
       font-size: 12px;
-      text-align: right;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
-    .ticket-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 52px;
-      padding: 0 23px;
-      border-top: 1px solid var(--line);
+    h1 {
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-size: clamp(34px, 6vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .intro-copy {
+      max-width: 480px;
+      margin: 0 auto;
       color: var(--muted);
-      font-size: 11px;
+      font-size: 15px;
+      line-height: 1.6;
     }
 
-    .foot-mark { color: #9a6138; font-weight: 700; }
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
 
-    .action-area {
+    .tab-btn {
+      padding: 10px 24px;
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      background: var(--card-bg);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 180ms ease;
+    }
+
+    .tab-btn.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 122, 89, 0.25);
+    }
+
+    /* Card Panels */
+    .panel {
+      display: none;
+      animation: fade-in 300ms ease both;
+    }
+    .panel.active { display: block; }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      background: var(--card-bg);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
+      padding: 32px;
+    }
+
+    /* Upload Box */
+    .upload-box {
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      padding: 48px 24px;
+      text-align: center;
+      background: var(--paper);
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease;
+      position: relative;
+    }
+    .upload-box:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .upload-box input[type="file"] {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .upload-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .upload-desc {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Preview & Result Area */
+    .result-container {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      .result-container {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+    }
+
+    .preview-frame {
+      width: 240px;
+      height: 240px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .preview-frame img, .preview-frame canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .placeholder-text {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .scores {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      padding-top: 24px;
+      gap: 16px;
+      width: 100%;
     }
 
-    .draw-button {
+    .score-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .score-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .score-bar-bg {
+      height: 14px;
+      width: 100%;
+      background: var(--line);
+      border-radius: 7px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      border-radius: 7px;
+      transition: width 600ms cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+
+    .action-btn {
       display: inline-flex;
-      min-width: 220px;
-      min-height: 54px;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px 24px;
       border: 0;
-      border-radius: 5px;
+      border-radius: 10px;
+      background: var(--primary);
       color: white;
-      background: var(--green);
-      box-shadow: 0 4px 0 var(--green-dark), 0 8px 18px #174c3826;
-      cursor: pointer;
       font-size: 15px;
       font-weight: 700;
-      transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+      box-shadow: 0 4px 14px rgba(255, 122, 89, 0.3);
+      transition: transform 140ms ease, background 140ms ease;
+    }
+    .action-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .action-btn:active { transform: translateY(1px); }
+
+    /* Webcam Panel */
+    .webcam-panel {
+      text-align: center;
+    }
+    .webcam-container {
+      margin: 20px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .webcam-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
     }
 
-    .draw-button:hover { background: #205e45; transform: translateY(-1px); }
-    .draw-button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--green-dark); }
-    .draw-button:focus-visible, .copy-button:focus-visible { outline: 3px solid #d09a4e; outline-offset: 3px; }
-    .draw-button svg { width: 18px; height: 18px; }
+    .loading-status {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
 
-    .fine-print { margin: 0; color: #7b837b; font-size: 11px; }
+    /* Footer & Comments */
+    .section-box {
+      margin-top: 40px;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      background: var(--card-bg);
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.04);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .toast {
       position: fixed;
       right: 20px;
       bottom: 20px;
-      padding: 12px 16px;
-      border-radius: 5px;
+      padding: 12px 18px;
+      border-radius: 8px;
       color: white;
-      background: var(--green-dark);
-      box-shadow: 0 8px 24px #10291c33;
+      background: #2b2b28;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       font-size: 13px;
       opacity: 0;
       pointer-events: none;
       transform: translateY(8px);
       transition: opacity 180ms ease, transform 180ms ease;
+      z-index: 1000;
     }
-
     .toast.visible { opacity: 1; transform: translateY(0); }
-
-    @keyframes rise-in {
-      from { opacity: 0; transform: translateY(7px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pop-in {
-      from { opacity: 0; transform: scale(.82); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @media (max-width: 580px) {
-      .page { width: min(100% - 28px, 480px); padding-top: 18px; }
-      .intro { display: block; padding: 34px 0 21px; }
-      .intro-copy { margin-top: 12px; font-size: 13px; }
-      .top-note { font-size: 10px; }
-      .ticket-head { min-height: 59px; padding: 0 14px; }
-      .ticket-title { gap: 7px; }
-      .ticket-title strong { font-size: 13px; }
-      .ticket-title span { font-size: 10px; }
-      .copy-button { min-height: 33px; padding: 0 8px; font-size: 11px; }
-      .results { padding: 3px 12px; }
-      .result-row { min-height: 53px; grid-template-columns: 32px 1fr 17px; }
-      .balls { gap: clamp(4px, 1.7vw, 8px); }
-      .ball { width: clamp(29px, 8vw, 34px); height: clamp(29px, 8vw, 34px); flex-basis: clamp(29px, 8vw, 34px); font-size: 11px; }
-      .ticket-foot { min-height: 46px; padding: 0 14px; font-size: 10px; }
-      .action-area { padding-top: 21px; }
-      .draw-button { min-width: 100%; min-height: 52px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
-    }
   </style>
 </head>
 <body>
   <main class="page">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">행</span> 행운상점</div>
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <span class="top-note">오늘의 작은 기대, 열 장</span>
-        <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">🌙 다크 모드</button>
-      </div>
+      <div class="brand"><span class="brand-mark">🐾</span> 멍냥 동물상 테스트</div>
+      <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">🌙 다크 모드</button>
     </header>
 
-    <section class="intro" aria-labelledby="page-title">
-      <div>
-        <p class="eyebrow">LUCKY NUMBERS, FRESHLY PICKED</p>
-        <h1 id="page-title">행운을 뽑아보세요</h1>
-      </div>
-      <p class="intro-copy">1부터 45까지, 겹치지 않는 숫자 6개.<br>새로운 조합 열 개를 준비했어요.</p>
+    <section class="intro">
+      <span class="eyebrow">AI Teachable Machine Model</span>
+      <h1>나는 강아지상일까, 고양이상일까?</h1>
+      <p class="intro-copy">인공지능 모델이 나의 얼굴을 분석하여 가장 잘 어울리는 동물상을 찾아드립니다. 사진을 업로드하거나 웹캠으로 바로 테스트해보세요!</p>
     </section>
 
-    <section class="ticket" aria-label="로또 번호 추첨 결과">
-      <div class="ticket-head">
-        <div class="ticket-title"><strong>행운 번호</strong><span>총 10게임</span></div>
-        <button class="copy-button" id="copy-button" type="button" aria-label="번호 열 게임 복사">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
-          번호 복사
-        </button>
-      </div>
-      <div class="results" id="results" aria-live="polite" aria-atomic="false"></div>
-      <div class="ticket-foot"><span id="draw-time">방금 추첨했어요</span><span class="foot-mark">행운은 가까이에</span></div>
-    </section>
-
-    <div class="action-area">
-      <button class="draw-button" id="draw-button" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"></path><circle cx="12" cy="12" r="4"></circle></svg>
-        번호 10게임 다시 뽑기
-      </button>
-      <p class="fine-print">각 게임은 1~45에서 숫자 6개를 무작위로 뽑습니다.</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="upload-tab">📸 사진 업로드 테스트</button>
+      <button class="tab-btn" data-tab="webcam-tab">🎥 웹캠 실시간 테스트</button>
     </div>
 
-    <section class="ticket" style="margin-top: 48px;" aria-label="제휴 문의">
-      <div class="ticket-head">
-        <div class="ticket-title"><strong>제휴 문의</strong><span>Partnership Inquiry</span></div>
-      </div>
-      <div style="padding: 24px;">
-        <form action="https://formspree.io/f/xeaevrkr" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
-          <div>
-            <label for="name" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">회사명 / 담당자명</label>
-            <input type="text" id="name" name="name" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="회사명 또는 성함을 입력해주세요">
-          </div>
-          <div>
-            <label for="email" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">이메일 주소</label>
-            <input type="email" id="email" name="email" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="reply@example.com">
-          </div>
-          <div>
-            <label for="message" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--ink);">문의 내용</label>
-            <textarea id="message" name="message" rows="4" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--ticket-border); border-radius: 6px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px; resize: vertical;" placeholder="제휴 및 협력 문의 내용을 자유롭게 작성해주세요"></textarea>
-          </div>
-          <button type="submit" class="draw-button" style="width: 100%; min-height: 46px; font-size: 14px; box-shadow: 0 4px 0 var(--green-dark), 0 6px 12px #174c3826;">문의 전송하기</button>
-        </form>
-      </div>
-    </section>
+    <!-- Upload Tab -->
+    <div id="upload-tab" class="panel active">
+      <div class="card">
+        <div id="loading-model-text" class="loading-status" style="text-align: center;">AI 모델을 불러오는 중입니다... 잠시만 기다려주세요!</div>
+        
+        <div class="upload-box" id="upload-box">
+          <input type="file" id="image-upload" accept="image/*">
+          <div class="upload-icon">🐶🐱</div>
+          <div class="upload-title">클릭하거나 사진을 여기에 드래그하세요</div>
+          <div class="upload-desc">JPG, PNG, WEBP 지원 (인물 사진이 가장 정확합니다)</div>
+        </div>
 
-    <section class="ticket" style="margin-top: 48px;" aria-label="댓글">
-      <div class="ticket-head">
-        <div class="ticket-title"><strong>댓글</strong><span>Comments</span></div>
+        <div class="result-container" id="result-container" style="display: none;">
+          <div class="preview-frame">
+            <img id="image-preview" alt="업로드된 사진 미리보기">
+          </div>
+          <div class="scores" id="upload-scores">
+            <!-- Dynamically populated scores -->
+          </div>
+        </div>
+
+        <button class="action-btn" id="reset-upload-btn" style="display: none;">다른 사진으로 다시 테스트하기</button>
       </div>
-      <div style="padding: 24px;">
-        <div id="disqus_thread"></div>
-        <script>
-            /**
-            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-            /*
-            var disqus_config = function () {
-            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            };
-            */
-            (function() { // DON'T EDIT BELOW THIS LINE
+    </div>
+
+    <!-- Webcam Tab -->
+    <div id="webcam-tab" class="panel">
+      <div class="card webcam-panel">
+        <h2 class="section-title" style="margin-top: 0;">웹캠 실시간 분석</h2>
+        <p class="intro-copy" style="margin-bottom: 20px;">웹캠에 얼굴을 비추면 실시간으로 동물상 확률이 측정됩니다.</p>
+        
+        <button class="action-btn" id="webcam-start-btn" style="max-width: 240px; margin: 0 auto 16px;">웹캠 시작하기</button>
+        
+        <div class="webcam-container" id="webcam-container">
+          <div class="placeholder-text">웹캠이 아직 켜지지 않았습니다.</div>
+        </div>
+
+        <div class="scores" id="webcam-scores" style="max-width: 400px; margin: 24px auto 0; display: none;">
+          <!-- Dynamically populated webcam scores -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <section class="section-box">
+      <h2 class="section-title">댓글 & 후기</h2>
+      <div id="disqus_thread"></div>
+      <script>
+          var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = "animal-face-test";
+          };
+          (function() {
             var d = document, s = d.createElement('script');
             s.src = 'https://money833.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      </div>
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </section>
+
+    <!-- Partnership Inquiry -->
+    <section class="section-box">
+      <h2 class="section-title">제휴 및 문의</h2>
+      <form action="https://formspree.io/f/xeaevrkr" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="name" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600;">성함 / 회사명</label>
+          <input type="text" id="name" name="name" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--card-border); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="성함 또는 회사명을 입력해주세요">
+        </div>
+        <div>
+          <label for="email" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600;">이메일 주소</label>
+          <input type="email" id="email" name="email" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--card-border); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px;" placeholder="reply@example.com">
+        </div>
+        <div>
+          <label for="message" style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600;">문의 내용</label>
+          <textarea id="message" name="message" rows="4" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--card-border); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-size: 14px; resize: vertical;" placeholder="제휴 및 건의사항을 자유롭게 남겨주세요"></textarea>
+        </div>
+        <button type="submit" class="action-btn" style="margin-top: 0;">문의 전송하기</button>
+      </form>
     </section>
   </main>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- TensorFlow.js & Teachable Machine Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
   <script>
-    const resultElement = document.querySelector("#results");
-    const drawTimeElement = document.querySelector("#draw-time");
+    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/-vYg4rvna/";
+    let model, maxPredictions = 0;
+    let webcam = null;
+    let webcamRunning = false;
+
+    const loadingText = document.querySelector("#loading-model-text");
+    const uploadScoresContainer = document.querySelector("#upload-scores");
+    const webcamScoresContainer = document.querySelector("#webcam-scores");
+    const resultContainer = document.querySelector("#result-container");
+    const resetUploadBtn = document.querySelector("#reset-upload-btn");
+    const uploadBox = document.querySelector("#upload-box");
+    const imagePreview = document.querySelector("#image-preview");
     const toastElement = document.querySelector("#toast");
-    let currentGames = [];
-    let toastTimer;
-
-    function randomNumber(max) {
-      if (window.crypto && window.crypto.getRandomValues) {
-        const range = 0x100000000;
-        const limit = range - (range % max);
-        const values = new Uint32Array(1);
-        do {
-          window.crypto.getRandomValues(values);
-        } while (values[0] >= limit);
-        return (values[0] % max) + 1;
-      }
-      return Math.floor(Math.random() * max) + 1;
-    }
-
-    function drawGames() {
-      return Array.from({ length: 10 }, () => {
-        const numbers = new Set();
-        while (numbers.size < 6) numbers.add(randomNumber(45));
-        return [...numbers].sort((first, second) => first - second);
-      });
-    }
-
-    function renderGames() {
-      resultElement.replaceChildren();
-      currentGames.forEach((numbers, gameIndex) => {
-        const row = document.createElement("div");
-        row.className = "result-row";
-        row.style.setProperty("--row", gameIndex);
-        row.setAttribute("aria-label", `${gameIndex + 1}게임`);
-
-        const index = document.createElement("span");
-        index.className = "row-index";
-        index.textContent = String(gameIndex + 1).padStart(2, "0");
-
-        const balls = document.createElement("div");
-        balls.className = "balls";
-        balls.setAttribute("aria-label", numbers.join(", "));
-        numbers.forEach((number, ballIndex) => {
-          const ball = document.createElement("span");
-          const colorClass = Math.ceil(number / 10);
-          ball.className = `ball ball-${colorClass}`;
-          ball.style.setProperty("--ball", ballIndex);
-          ball.textContent = String(number).padStart(2, "0");
-          balls.append(ball);
-        });
-
-        const check = document.createElement("span");
-        check.className = "row-check";
-        check.textContent = "✓";
-        check.setAttribute("aria-hidden", "true");
-        row.append(index, balls, check);
-        resultElement.append(row);
-      });
-      drawTimeElement.textContent = `추첨 시각 ${new Intl.DateTimeFormat("ko-KR", { hour: "2-digit", minute: "2-digit" }).format(new Date())}`;
-    }
 
     function showToast(message) {
-      window.clearTimeout(toastTimer);
       toastElement.textContent = message;
       toastElement.classList.add("visible");
-      toastTimer = window.setTimeout(() => toastElement.classList.remove("visible"), 2200);
+      setTimeout(() => toastElement.classList.remove("visible"), 2500);
     }
 
-    document.querySelector("#draw-button").addEventListener("click", () => {
-      currentGames = drawGames();
-      renderGames();
-    });
-
-    document.querySelector("#copy-button").addEventListener("click", async () => {
-      const text = currentGames.map((numbers, index) => `${String(index + 1).padStart(2, "0")}게임  ${numbers.map(number => String(number).padStart(2, "0")).join(", ")}`).join("\n");
+    // Load Model
+    async function loadModel() {
       try {
-        await navigator.clipboard.writeText(text);
-      } catch {
-        const temporaryInput = document.createElement("textarea");
-        temporaryInput.value = text;
-        temporaryInput.style.position = "fixed";
-        temporaryInput.style.opacity = "0";
-        document.body.append(temporaryInput);
-        temporaryInput.select();
-        document.execCommand("copy");
-        temporaryInput.remove();
+        const modelURL = MODEL_URL + "model.json";
+        const metadataURL = MODEL_URL + "metadata.json";
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+        loadingText.textContent = "✨ AI 모델 로드 완료! 사진을 업로드하거나 웹캠을 시작하세요.";
+        setTimeout(() => { loadingText.style.display = "none"; }, 3000);
+      } catch (err) {
+        console.error(err);
+        loadingText.textContent = "❌ 모델 로드에 실패했습니다. 인터넷 연결을 확인해주세요.";
+        loadingText.style.color = "#ed785d";
       }
-      showToast("번호 10게임을 복사했어요.");
+    }
+
+    loadModel();
+
+    // Tab switching
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+
+        // Stop webcam if switching away from webcam tab
+        if (btn.dataset.tab !== "webcam-tab" && webcamRunning) {
+          stopWebcam();
+        }
+      });
     });
 
+    // Handle Image Upload
+    const imageInput = document.querySelector("#image-upload");
+    imageInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!model) {
+        showToast("아직 모델이 로드되지 않았습니다. 잠시만 기다려주세요.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        imagePreview.src = event.target.result;
+        uploadBox.style.display = "none";
+        resultContainer.style.display = "grid";
+        resetUploadBtn.style.display = "inline-flex";
+
+        // Wait for image load then predict
+        imagePreview.onload = async () => {
+          const predictions = await model.predict(imagePreview);
+          renderScores(uploadScoresContainer, predictions);
+        };
+      };
+      reader.readAsDataURL(file);
+    });
+
+    resetUploadBtn.addEventListener("click", () => {
+      imageInput.value = "";
+      imagePreview.src = "";
+      uploadBox.style.display = "block";
+      resultContainer.style.display = "none";
+      resetUploadBtn.style.display = "none";
+      uploadScoresContainer.innerHTML = "";
+    });
+
+    function renderScores(container, predictions) {
+      container.innerHTML = "";
+      // Sort predictions descending by probability
+      const sorted = [...predictions].sort((a, b) => b.probability - a.probability);
+
+      sorted.forEach((pred, index) => {
+        const percent = (pred.probability * 100).toFixed(1);
+        const item = document.createElement("div");
+        item.className = "score-item";
+        item.style.animation = `fade-in 300ms ease ${index * 100}ms both`;
+
+        const info = document.createElement("div");
+        info.className = "score-info";
+        info.innerHTML = `<span>${pred.className}</span><span>${percent}%</span>`;
+
+        const barBg = document.createElement("div");
+        barBg.className = "score-bar-bg";
+
+        const barFill = document.createElement("div");
+        barFill.className = "score-bar-fill";
+        // Trigger reflow for smooth animation
+        setTimeout(() => { barFill.style.width = `${percent}%`; }, 50);
+
+        barBg.appendChild(barFill);
+        item.appendChild(info);
+        item.appendChild(barBg);
+        container.appendChild(item);
+      });
+    }
+
+    // Webcam handling
+    const webcamStartBtn = document.querySelector("#webcam-start-btn");
+    const webcamContainer = document.querySelector("#webcam-container");
+
+    webcamStartBtn.addEventListener("click", async () => {
+      if (!model) {
+        showToast("아직 모델이 로드되지 않았습니다.");
+        return;
+      }
+      if (webcamRunning) {
+        stopWebcam();
+        return;
+      }
+
+      try {
+        const flip = true;
+        webcam = new tmImage.Webcam(260, 260, flip);
+        await webcam.setup();
+        await webcam.play();
+        webcamRunning = true;
+        webcamStartBtn.textContent = "웹캠 중지하기";
+        webcamScoresContainer.style.display = "flex";
+
+        webcamContainer.replaceChildren(webcam.canvas);
+        window.requestAnimationFrame(webcamLoop);
+      } catch (err) {
+        console.error(err);
+        showToast("웹캠을 시작할 수 없습니다. 권한을 확인해주세요.");
+      }
+    });
+
+    async function webcamLoop() {
+      if (!webcamRunning) return;
+      webcam.update();
+      await predictWebcam();
+      window.requestAnimationFrame(webcamLoop);
+    }
+
+    async function predictWebcam() {
+      if (!model || !webcam) return;
+      const prediction = await model.predict(webcam.canvas);
+      renderScores(webcamScoresContainer, prediction);
+    }
+
+    function stopWebcam() {
+      if (webcam && webcamRunning) {
+        webcam.stop();
+        webcamRunning = false;
+        webcamStartBtn.textContent = "웹캠 시작하기";
+        webcamContainer.innerHTML = '<div class="placeholder-text">웹캠이 중지되었습니다.</div>';
+        webcamScoresContainer.style.display = "none";
+      }
+    }
+
+    // Theme toggle
     const themeToggleButton = document.querySelector("#theme-toggle");
     const savedTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 
     if (savedTheme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
       themeToggleButton.textContent = "☀️ 라이트 모드";
-    } else {
-      document.documentElement.setAttribute("data-theme", "light");
-      themeToggleButton.textContent = "🌙 다크 모드";
     }
 
     themeToggleButton.addEventListener("click", () => {
@@ -548,9 +674,6 @@
       localStorage.setItem("theme", newTheme);
       themeToggleButton.textContent = newTheme === "dark" ? "☀️ 라이트 모드" : "🌙 다크 모드";
     });
-
-    currentGames = drawGames();
-    renderGames();
   </script>
 </body>
 </html>
