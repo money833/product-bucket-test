@@ -89,7 +89,7 @@
       font-size: 18px;
     }
 
-    .theme-toggle {
+    .theme-toggle, .nav-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -99,9 +99,10 @@
       background: transparent;
       color: var(--ink);
       font-size: 12px;
+      text-decoration: none;
       transition: background 160ms ease, border-color 160ms ease;
     }
-    .theme-toggle:hover { background: var(--line); }
+    .theme-toggle:hover, .nav-btn:hover { background: var(--line); }
 
     .intro {
       text-align: center;
@@ -382,7 +383,10 @@
   <main class="page">
     <header class="topbar">
       <div class="brand"><span class="brand-mark">🐾</span> 멍냥 동물상 테스트</div>
-      <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">🌙 다크 모드</button>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="lotto.html" class="nav-btn">🍀 로또 번호 추첨기</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">🌙 다크 모드</button>
+      </div>
     </header>
 
     <section class="intro">
